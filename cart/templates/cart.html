@@ -141,6 +141,7 @@
 
 			<div class="col-md-6 p-b-30">
 				<form class="leave-comment" action="{% url "coupons:apply" %}" method="post">
+					{% csrf_token %}
 					<h4 class="m-text26 p-b-36 p-t-15">
 						{% trans "Saisissez un coupon ici" %}
 					</h4>
@@ -148,7 +149,6 @@
 						<input class="sizefull s-text7 p-l-22 p-r-22" type="text" name="code" placeholder="{% if LANGUAGE_CODE != 'ar' %} Coupon {% else %} كوبون {%endif%}">
 					</div>
 					<div class="w-size25">
-						<!-- Button -->
 						<button class="flex-c-m size2 bg1  hov1 m-text3 trans-0-4">
 							{% trans "Utiliser" %}
 						</button>

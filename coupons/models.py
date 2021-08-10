@@ -26,7 +26,7 @@ class Coupon(models.Model):
     discount_percentage = models.IntegerField(verbose_name= 'Pourcentage',  validators= [MinValueValidator(0), MaxValueValidator(100)], default=0)
     active              = models.BooleanField(verbose_name='Actif', default=True)
     stock               = models.IntegerField(verbose_name = 'Coupons restant', default= 1)
-    used                = models.IntegerField(verbose_name = 'Coupons restant', default= 1)
+    used                = models.IntegerField(verbose_name = 'Coupons restant', default= 0)
     
     created = models.DateTimeField(verbose_name='Date de Création', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Date de dernière mise à jour', auto_now=True)

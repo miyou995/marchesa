@@ -10,11 +10,7 @@ from .forms import CartAddProductForm
 from django.template.loader import render_to_string
 from django.contrib import messages
 
-# import weasyprint
-# Create your views here.
-
-class CartView(TemplateView):
-    template_name = "cart.html"
+    
     
 
 # class CheckoutView(TemplateView):

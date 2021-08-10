@@ -7,15 +7,20 @@ from .models import  OrderItem, Order
 from django.contrib.admin.views.decorators import staff_member_required
 from django.template.loader import render_to_string
 from cart.cart import Cart
+from coupons.models import Coupon
 from delivery.models import Wilaya, Commune
 def order_create_one_product(request,product_id=None):
     form = OrderCreateForm()
     if request.method == 'POST':
         product = Product.objects.get(id=product_id)
         form = OrderCreateForm(request.POST)
-        print(
-                'le FORMULAIRE', form
-                )
+        
+        coupon = request.session['coupon_id']
+        print('le couson utiliser est : ', coupon)
+        # coupon.stock -= 1
+        # coupon.used += 1
+        # coupon.save()
+        print('le FORMULAIRE', form)
         if form.is_valid():
             cd = form.cleaned_data
             quantity=cd['quantity']
@@ -45,7 +50,12 @@ def order_create(request):
     cart = Cart(request)
     wilayas= Wilaya.objects.all().order_by('name') 
     form = OrderFormWithOutQuantity()
-    print('INIT FORM', OrderFormWithOutQuantity())
+    
+    coupon_id = request.session['coupon_id']
+    coupon = Coupon.objects.get(id=coupon_id)
+    print('le couson utiliser est : ', coupon)
+    
+    # print('INIT FORM', OrderFormWithOutQuantity())
     if cart.__len__() :
         print('request', request.method)
         if request.method == 'POST':
@@ -53,10 +63,14 @@ def order_create(request):
             if form.is_valid():
                 print('le formulaire est valid')
                 order = form.save()
+
                 # try:
-                print('carte ========>',cart)
+                # print('carte ========>',cart)
                 for item in cart:
                     OrderItem.objects.create(order=order,product=item['product'],price=item['price'],quantity=item['quantity'])
+                coupon.stock -= 1
+                coupon.used += 1
+                coupon.save()
                 cart.clear()
                 return render(request, 'created.html', {'order': order})
     else: 

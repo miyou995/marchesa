@@ -17,6 +17,9 @@ def coupon_apply(request):
             coupon = Coupon.objects.get(code__iexact=code, valid_from__lte=now, valid_to__gte=now, active=True)
             if(coupon.stock > 0 ):
                 request.session['coupon_id'] = coupon.id
+                coupon.stock -= 1
+                coupon.used += 1
+                coupon.save()
             else:
                 print('Coupon non disponible')
         except Coupon.DoesNotExist:

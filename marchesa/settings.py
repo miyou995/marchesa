@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 # third party
     'colorfield' ,
     'django_cleanup.apps.CleanupConfig',
+    'import_export',
 # dev 
     'debug_toolbar',
 ]

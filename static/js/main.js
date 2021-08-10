@@ -24,6 +24,25 @@
         transition: function(url){ window.location.href = url; }
     });
     
+    $("#wilayaId").change(function () {
+        const url = $("#order_form").attr("data-communes-url"); 
+        const wilayaPk = $(this).val();
+		// var wilaya = $('#wilayaId')
+		var wilaya = document.getElementById('wilayaId');
+		var selected = wilaya.options[wilaya.selectedIndex];
+		var price = selected.getAttribute('data-price');
+		console.log('la wilaya a ');
+        $.ajax({                   
+            url: url,                
+            data: {
+                'wilaya_id': wilayaPk      
+            },
+            success: function (data) { 
+                $("#communesId").html(data);
+                $('#deliveryCost').html(price)
+			}
+        });
+    });
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height()/2;

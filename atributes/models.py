@@ -25,7 +25,8 @@ class Pointure(models.Model):
     
 class Couleur(models.Model):
     name        = models.CharField(verbose_name ="nom", max_length=50)
+    # hex_value   = models.CharField(max_length=7, verbose_name="Valeur hexadécimale")
     hex_value   = ColorField(max_length=7, verbose_name="Valeur hexadécimale")
 
     def __str__(self):
-        return self.name 
+        return self.name

@@ -17,20 +17,20 @@ from django.utils.translation import gettext_lazy as _
 
 class Order(models.Model):
     
-    first_name  = models.CharField(verbose_name="Nom" , max_length=50)
-    last_name   = models.CharField(verbose_name="Prenom" , max_length=50)
-    address    = models.CharField(verbose_name="Adresse" , max_length=250)
-    phone       = models.CharField(verbose_name="Téléphone" , max_length=25)
-    email       = models.EmailField(verbose_name="Email", null=True, blank=True)
-    wilaya      = models.ForeignKey(Wilaya, on_delete=models.SET_NULL, null=True, blank=True)
-    commune     = models.ForeignKey(Commune, on_delete=models.SET_NULL, null=True, blank=True)
-    created     = models.DateTimeField(auto_now_add=True, verbose_name=_("Crée"))
-    updated     = models.DateTimeField(auto_now=True, verbose_name=_("Modifié"))
-    note        = models.TextField(blank=True, null=True, verbose_name=_("Note"))
-    paid        = models.BooleanField(default=False, verbose_name=_("Payé"))
-    confirmer   = models.BooleanField(default=False, verbose_name=_("Confirmé"))
-    coupon      = models.ForeignKey(Coupon, related_name='orders', null=True, blank=True, on_delete= models.SET_NULL, verbose_name=_("Coupons"))
-    delivery_cost    = models.DecimalField( max_digits=10, decimal_places=2, default=0, verbose_name="Prix Livraison")
+    first_name    = models.CharField(verbose_name="Nom" , max_length=50)
+    last_name     = models.CharField(verbose_name="Prenom" , max_length=50)
+    address       = models.CharField(verbose_name="Adresse" , max_length=250)
+    phone         = models.CharField(verbose_name="Téléphone" , max_length=25)
+    email         = models.EmailField(verbose_name="Email", null=True, blank=True)
+    wilaya        = models.ForeignKey(Wilaya, on_delete=models.SET_NULL, null=True, blank=True)
+    commune       = models.ForeignKey(Commune, on_delete=models.SET_NULL, null=True, blank=True)
+    created       = models.DateTimeField(auto_now_add=True, verbose_name=_("Crée"))
+    updated       = models.DateTimeField(auto_now=True, verbose_name=_("Modifié"))
+    note          = models.TextField(blank=True, null=True, verbose_name=_("Note"))
+    paid          = models.BooleanField(default=False, verbose_name=_("Payé"))
+    confirmer     = models.BooleanField(default=False, verbose_name=_("Confirmé"))
+    coupon        = models.ForeignKey(Coupon, related_name='orders', null=True, blank=True, on_delete= models.SET_NULL, verbose_name=_("Coupons"))
+    delivery_cost = models.DecimalField( max_digits=10, decimal_places=2, default=0, verbose_name="Prix Livraison")
     
     class Meta:
         verbose_name = "Commande"
@@ -48,18 +48,16 @@ class Order(models.Model):
             if self.coupon.discount_amount:
                 return self.coupon.discount_amount
             else:
-                return (self.coupon.discount_percentage / Decimal(100)) \
-                * self.get_total_price()
+                return (self.coupon.discount_percentage / Decimal(100)) * self.get_total_price()
         return Decimal(0)
 
-
     def get_total_cost(self):
-        total_cost = sum(item.get_cost() for item in self.items.all())
-        total_cost = total_cost - self.get_discount()
+        items_cost = sum(item.get_cost() for item in self.items.all())
+        total_cost = items_cost - self.get_discount()
         if total_cost < 0:
             total_cost = 0
         total_order = total_cost + self.delivery_cost 
-        return total_cost
+        return total_order
 
 
 class OrderItem(models.Model):
@@ -71,6 +69,7 @@ class OrderItem(models.Model):
     pointure   = models.CharField(verbose_name=(_("Pointure")),max_length=50)
     taille   = models.CharField(max_length=50, verbose_name=_("Taille"))
     couleur   = models.CharField(max_length=50, verbose_name=_("Couleur"))
+
 
 
     def __str__(self):

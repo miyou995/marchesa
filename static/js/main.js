@@ -1,7 +1,6 @@
 
 (function ($) {
     "use strict";
-
     /*[ Load page ]
     ===========================================================*/
     $(".animsition").animsition({
@@ -26,12 +25,16 @@
     
     $("#wilayaId").change(function () {
         const url = $("#order_form").attr("data-communes-url"); 
+        const order_total_container = document.querySelector('#order_total')
+
         const wilayaPk = $(this).val();
-		// var wilaya = $('#wilayaId')
 		var wilaya = document.getElementById('wilayaId');
 		var selected = wilaya.options[wilaya.selectedIndex];
 		var price = selected.getAttribute('data-price');
-		console.log('la wilaya a ');
+
+        const total_without_delivery = parseFloat(order_total_container.getAttribute('data-order-total'))
+        console.log('total_without_delivery', total_without_delivery);
+        const total_price = parseFloat(total_without_delivery) + parseFloat(price)
         $.ajax({                   
             url: url,                
             data: {
@@ -40,9 +43,15 @@
             success: function (data) { 
                 $("#communesId").html(data);
                 $('#deliveryCost').html(price)
+                $('#order_total').html(total_price)
+
 			}
         });
     });
+
+
+
+
     /*[ Back to top ]
     ===========================================================*/
     var windowH = $(window).height()/2;

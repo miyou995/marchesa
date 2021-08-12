@@ -130,7 +130,7 @@
 							<h5 class="m-4">{% trans "Selectionnez une Pointure:" %}</h5>
 							{% for co in product.pointure.all %}
 								<div class="d-inline-block text-center dot-wrapper taille__wrapper mt-4">
-									<input id="{{co.id}}" class="variant-input visually-hidden" type="radio" name="taille" value="{{co.name}}"/>
+									<input id="{{co.id}}" class="variant-input visually-hidden" type="radio" name="pointure" value="{{co.name}}"/>
 									<label class="variant__button__label" for="{{co.id}}">
 										{{co.name}}
 									</label>
@@ -147,7 +147,7 @@
 									{% for co in product.couleur.all  %}
 										<td class="colours">
 											<div class="d-inline-block text-center dot-wrapper">
-												<input type="radio" id="{{co.hex_value}}" name="color" value="#{{co.hex_value}}" >
+												<input type="radio" id="{{co.hex_value}}" name="color" value="{{co.hex_value}}" >
 												<label for="{{co.hex_value}}">
 													<span class="dot" style="background-color: {{ co.hex_value }};" title="{{ co.nom }}"></span>
 												</label>
@@ -212,18 +212,9 @@
 	{% if similar_products %}
 	<section class="relateproduct bgwhite p-t-45 p-b-138" dir="rtl">
 		<div class="container">
-			
 			<div class="sec-title p-b-60">
-				<h3 class="m-text5 t-center">
-					{% if LANGUAGE_CODE != 'ar' %}
-						Produits similaires
-					{% else %}
-						منتجات مماثلة   
-					{%endif%}
-				</h3>
+				<h3 class="m-text5 t-center">Produits similaires</h3>
 			</div>
-
-			<!-- Slide2 -->
 			<div class="wrap-slick2">
 				<div class="slick2">
 					{% for prod in similar_products %}
@@ -232,13 +223,13 @@
 						<div class="block2">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative {% if prod.status == 'N' %} block2-labelnew {% elif prod.status == 'P' %} block2-labelsale {% endif %}">
 								{% if prod.photo %}
-										<img src="{{ prod.photo.url }}" alt="{{prod.name}}">
-										{% elif prod.photo2 %}
-											<img src="{{ prod.photo2.url }}" alt="{{prod.name}}">
-										{% elif prod.photo3 %}
-										<img src="{{ prod.photo3.url }}" alt="{{prod.name}}">
-										{% else %}
-										<img src="{% static 'photos/banner-01.jpg' %}" alt="{{prod.name}}">
+									<img src="{{ prod.photo.url }}" alt="{{prod.name}}">
+								{% elif prod.photo2 %}
+									<img src="{{ prod.photo2.url }}" alt="{{prod.name}}">
+								{% elif prod.photo3 %}
+									<img src="{{ prod.photo3.url }}" alt="{{prod.name}}">
+								{% else %}
+									<img src="{% static 'photos/banner-01.jpg' %}" alt="{{prod.name}}">
 								{% endif %}
 
 								<div class="block2-overlay trans-0-4">
@@ -274,11 +265,7 @@
 								</span>
 								{% endif %}
 								<span class="block2-price m-text6 p-r-5">
-									{% if LANGUAGE_CODE != 'ar' %}
-										{{prod.price}} DA 
-									{% else %}
-										{{prod.price}} دج
-									{%endif%}
+									{{prod.price}} DA 
 								</span>
 							</div>
 						</div>

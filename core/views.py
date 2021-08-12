@@ -17,14 +17,40 @@ class IndexView(TemplateView):
         context["home_slide"] = Photos.objects.filter(actif=True, is_big=True)[:1]
         context["small_slide"] = Photos.objects.filter(actif=True, is_small=True)[:2]
         return context
+#  STATIC
+class ContactView(TemplateView):
+    template_name = "Contact.html"
 
 
 class AboutView(TemplateView):
     template_name = "about.html"
 
 
-class ContactView(TemplateView):
-    template_name = "Contact.html"
+#  PAIEMENT
+
+class VirementBancaireView(TemplateView):
+    template_name = "paiement/virement-bancaire.html"
+
+class CarteBancaireView(TemplateView):
+    template_name = "paiement/carte-bancaire.html"
+
+class PaiementView(TemplateView):
+    template_name = "paiement/paiement.html"
+
+class PaiementEspecesView(TemplateView):
+    template_name = "paiement/paiement-especes.html"
+
+
+#  LIVRAISON
+
+class EchangeView(TemplateView):
+    template_name = "livraison/echange.html"
+
+class LivraisonView(TemplateView):
+    template_name = "livraison/livraison.html"
+
+class RetourView(TemplateView):
+    template_name = "livraison/retours.html"
 
 
 

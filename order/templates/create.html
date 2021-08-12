@@ -32,7 +32,6 @@
 	</div>
 	<!-- /container -->
 </div>
-<div class="section">
 	<!-- container -->
 	<div class="container">
 		<!-- row -->
@@ -43,7 +42,6 @@
 					{% csrf_token %}
 					<div class="row">
 					  <div class="col-md-6">
-						<!--firstName-->
 						<div class="form-group ">
 							<input class="input" type="text" name="first_name" id="first_name" class="form-control" placeholder="{% trans "Votre Nom" %}" required>
 						</div>
@@ -56,19 +54,16 @@
 					</div>
 					<div class="row">
 						<div class="col-md-6">
-						<div class="form-group">
-							<input class="input" type="text" name="email" id="email" class="form-control" placeholder="{% trans "VotreEmail@example.com" %}" >
+							<div class="form-group">
+								<input class="input" type="text" name="email" id="email" class="form-control" placeholder="{% trans "VotreEmail@example.com" %}" >
+							</div>
 						</div>
-						</div>
-						<!--telephone-->
 						<div class="col-md-6">
 						  <div class="form-group">
 							<input class="input" type="text" name="phone" id="telephone" class="form-control" placeholder="{% trans "votre numéro de téléphone" %}" required>
 						  </div>
 						</div>
 					</div>
-					<!--address-->
-													<!--Grid row-->
 					<div class="row">
 						<!--Grid column-->
 						<div class="col-6">
@@ -91,23 +86,21 @@
 								</select>
 							</div>
 						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<input class="input" type="text" name="address" id="addresse" class="form-control" placeholder="Votre adresse de livraison" required>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<textarea name="note" id="note" class="input" placeholder="Notes pour cette commande (facultatif)"></textarea>
+							</div>
+						</div>
 					</div>
-				
-						<div class="col-">
-							<div class="form-group">
-								<input class="input" type="text" name="address" id="addresse" class="form-control" placeholder="{% if LANGUAGE_CODE != 'ar' %} Votre adresse de livraison {% else %}عنوان التسليم{%endif%}" required>
-							</div>
-						</div>
-						<div class="col-">
-							<div class="form-group">
-								<textarea name="note" id="note" class="input" placeholder="{% trans "Notes pour cette commande (facultatif)" %}"></textarea>
-							</div>
-						</div>
-					<!-- /Order notes -->
-					<hr class="mb-4">
+					<div class="row">
+					</div>
+						<hr class="mb-4">
 					<button class="btn  btn-lg btn-block" style="background-color: #f0a1bf; color: #ffffff;" type="submit">{% trans "Valider ma commande" %}</button>
-				</div>
-				
 				</form>
 			</div>
 			<div class="col- col-md-5">
@@ -117,14 +110,15 @@
 				<div class="order-summary">
 					<div class="order-col">
 						<div><strong>{% trans "Produit" %}</strong></div>
-						<div><strong style="text-transform: uppercase">{% trans "total" %}</strong></div>
+						<div><strong style="text-transform: uppercase">total / DA</strong></div>
 					</div>
+					
 					<div class="order-products">
 						{% for item in cart %}
 							<div class="order-col">
 								<div>{{ item.product.name }} <span class="text-danger">X</span> {{ item.quantity }}</div>
 								<div>
-									{{ item.total_price }} DA
+									{{ item.total_price }}
 								</div>
 							</div>
 						{% endfor %}
@@ -133,7 +127,6 @@
 						<div style="text-transform: capitalize">Livraison</div>
 						<div id="deliveryCost"></div>
 					</div>
-					
 					{% if cart.coupon %}
 						<div class="order-col">
 							<div style="text-transform: uppercase">{% trans "Réduction" %}</div>
@@ -142,7 +135,7 @@
 							{% else %}
 								<div>
 									<strong>
-										{{cart.coupon.discount_amount}} DA
+										{{cart.coupon.discount_amount}}
 									</strong>
 								</div>
 							{%endif%}
@@ -152,72 +145,10 @@
 						<div><strong style="text-transform: uppercase">{% trans "Total" %}</strong></div>
 						<div><strong class="order-total" id="order_total" data-order-total="{{ cart.get_total_price_after_discount|floatformat:2}}"></strong></div>
 					</div>
+					
 				</div>
-
 			</div>
 		</div>
 	</div>
-</div>
-
 {% endblock content %}
 
-{% block javascript %}
-  <script src="{% static 'js/order.js' %}" charset="utf-8"></script>
-{% endblock javascript %}
-
-
-{% comment %}
-<div class="row">
-
-	<div class="col- col-md-6">
-		<h2>Informaions</h2>
-		<!-- Billing Details -->
-		
-		<form class="card-body" method='POST' id="order_form" data-communes-url="{% url 'delivery:load_communes' %}">
-			{% csrf_token %}
-			<div class="row">
-			<!--Grid row-->
-			  <!--Grid column-->
-				  <div class="col-md-6">
-						<input class="input" type="text" name="first_name" id="first_name" class="form-control" placeholder="{% trans "Votre Nom" %}" required>
-				  </div>
-				  <div class="col-md-6">
-						<input class="input" type="text" name="last_name" id="last_name" class="form-control"placeholder="{% trans "Votre Prénom" %}" required>
-				  </div>
-				<div class="col-md-6">
-					<input class="input" type="text" name="email" id="email" class="form-control" placeholder="{% trans "VotreEmail@example.com" %}" >
-				</div>
-				<!--telephone-->
-				<div class="col-md-6">
-					<input class="input" type="text" name="phone" id="telephone" class="form-control" placeholder="{% trans "votre numéro de téléphone" %}" required>
-				</div>
-											<!--Grid row-->
-				<div class="col-6 ">
-						<select class="input" name="wilaya" id="wilayaId"  required>
-							<option class="option" value='' selected>Wilaya ( الولاية)</option>
-							{% for wilaya in wilayas %}
-								<option class="option" data-price={{wilaya.price}} value={{wilaya.id}}>{{wilaya.name}}</option>
-							{% endfor %}
-						</select>
-				</div>
-				<div class="col- col-md-6">
-						<select class="input" name="commune" id="communesId" required>
-							<option class="option" value='' selected>Commune (البلدية)</option>
-							{% for commune in communes %}
-								<option class="option" value={{commune.id}}>{{commune.name}}</option>
-							{% endfor %}
-						</select>
-				</div>
-				<div class="col- col-md-6">
-					<input class="input" type="text" name="address" id="addresse" class="form-control" placeholder="Votre adresse de livraison" required>
-				</div>
-				<div class="col- order-notes">
-					<textarea name="note" id="note" class="input" placeholder="{% trans "Notes pour cette commande (facultatif)" %}"></textarea>
-				</div>
-				<!-- /Order notes -->
-				<button class="btn  btn-lg btn-block" style="background-color: #f0a1bf; color: #ffffff;" type="submit">{% trans "Valider ma commande" %}</button>
-			</div>
-		</form>
-
-	</div>
-{% endcomment %}

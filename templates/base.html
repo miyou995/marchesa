@@ -117,7 +117,16 @@
 			{% endwith %}
 		</div>
 	</div>
+	<div class="flex-c-m size22 bg0 s-text21 pos-relative">
+		livraison gratuite pour une commande supérieure à 10 000 DA
+		<a href="{% url 'core:products' %}" class="s-text22 hov6 p-l-5">
+			Shop 
+		</a>
 
+		<button class="flex-c-m pos2 size23 colorwhite eff3 trans-0-4 btn-romove-top-noti">
+			<i class="fa fa-remove fs-13" aria-hidden="true"></i>
+		</button>
+	</div>
 
 	<!-- Header -->
 	<header class="header2">
@@ -402,23 +411,24 @@
 
 			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
 				<h4 class="s-text12 p-b-30">
-					Paiement
+					<a href="{% url 'core:paiement' %}" class="s-text7">
+						Paiement
+					</a>
 				</h4>
 
 				<ul>
 					<li class="p-b-9">
-						<a href="#" class="s-text7">
+						<a href="{% url 'core:virement-bancaire' %}" class="s-text7">
 							Virement bancaire
 						</a>
 					</li>
 
 					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Paiement en espèces						</a>
+						<a href="{% url 'core:paiement-especes' %}" class="s-text7">Paiement en espèces</a>
 					</li>
 
 					<li class="p-b-9">
-						<a href="#" class="s-text7">
+						<a href="{% url 'core:crte-bancaire' %}" class="s-text7">
 							Carte bancaire
 						</a>
 					</li>
@@ -429,21 +439,19 @@
 
 			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
 				<h4 class="s-text12 p-b-30">
-					Livraison
+					<a href="{% url 'core:livraison' %}" class="s-text7">
+						Livraison
+					</a>
 				</h4>
 				<ul>
+					
 					<li class="p-b-9">
-						<a href="#" class="s-text7">
-							Livraison
-						</a>
-					</li>
-					<li class="p-b-9">
-						<a href="#" class="s-text7">
+						<a href="{% url 'core:retour' %}" class="s-text7">
 							Retours & Remboursement
 						</a>
 					</li>
 					<li class="p-b-9">
-						<a href="#" class="s-text7 text-capitalize">
+						<a href="{% url 'core:echange' %}" class="s-text7 text-capitalize">
 							échange
 						</a>
 					</li>

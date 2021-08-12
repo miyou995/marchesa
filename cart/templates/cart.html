@@ -49,19 +49,25 @@
 								<tr class="table-row">
 									<td class="column-1">
 										<div class="cart-img-product b-rad-4 o-f-hidden">
-											<img src="{% if product.photo1 %}{{product.photo1.url}}{% else %} {% static 'images/no-photo.jpg' %}{% endif %}" alt="IMG-PRODUCT">
+											<a href="{{product.get_absolute_url}}">
+												<img src="{% if product.photo1 %}{{product.photo1.url}}{% else %} {% static 'images/no-photo.jpg' %}{% endif %}" alt="IMG-PRODUCT">
+											</a>
 										</div>
 									</td>
 									{% if product.name %}
-										<td class="column-3">{{product.name}}</td>
-									
+										<td class="column-3"><a href="{{product.get_absolute_url}}">{{product.name}}</a></td>
 									{% else %}
 										<td class="column-2">X</td>
-									
+									{% endif %}
+									{% if item.taille %}
+										<td class="column-3">{{item.taille}}</td>
+									{% elif item.pointure %}
+										<td class="column-3">{{item.pointure}}</td>
+									{% else %}
+										<td class="column-3"></td>
 									{% endif %}
 									
-									<td class="column-3">{{item.taille}}</td>
-									<td class="column-3"><span class="dot small-dot mr-2" style="background-color: {{ item.color }}"></span></td>
+									<td class="column-3"><span class="dot mr-2" style="background-color:{{item.color}}"></span></td>
 									<td class="column-3">{{item.price}} DA </td>
 
 									<td class="column-4">

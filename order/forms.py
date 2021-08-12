@@ -10,7 +10,9 @@ class OrderCreateForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['first_name', 'last_name', 'address',  'email', 'phone', 'wilaya', 'commune', 'note']
-    
+        required = ('first_name', 'last_name',  'phone', 'wilaya', 'commune')
+       
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # self.fields['wilaya'] = forms.ModelChoiceField(queryset=Wilaya.objects.all()) 

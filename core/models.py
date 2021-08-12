@@ -71,10 +71,10 @@ class Product(models.Model):
    
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE, related_name="collections", blank=True, null=True)
     taille     = models.ManyToManyField(Taille, blank=True, related_name="tailles")
-    pointure   = models.ManyToManyField(Pointure, blank=True, related_name="pointure")
-    couleur    = models.ManyToManyField(Couleur, related_name="couleur")
+    pointure   = models.ManyToManyField(Pointure, blank=True, related_name="pointures")
+    couleur    = models.ManyToManyField(Couleur, related_name="couleurs")
 
-    actif  = models.BooleanField(verbose_name='actif', default=True)
+    actif      = models.BooleanField(verbose_name='actif', default=True)
     new        = models.BooleanField(verbose_name='Nouveau', default=True)
     top        = models.BooleanField(verbose_name='Meilleur vente', default=True)
 
